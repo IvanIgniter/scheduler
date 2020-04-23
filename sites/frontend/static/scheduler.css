@@ -1,0 +1,26 @@
+.e-location-container {
+  display: none;
+}
+
+/* .e-all-day-container {
+  display: none;
+}*/
+
+
+.e-time-zone-container {
+  display: none;
+} 
+
+.e-recurrenceeditor {
+  display: none;
+}
+
+.e-time-icon {
+  display: none!important;
+}
+
+.e-time {
+  display: none!important;
+}
+
+

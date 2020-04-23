@@ -1,0 +1,40 @@
+{
+  "name": "scheduler3",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "dev": "next",
+    "build": "next build",
+    "start": "next start"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@babel/core": "^7.1.0",
+    "@babel/plugin-proposal-class-properties": "^7.1.0",
+    "@babel/plugin-proposal-decorators": "^7.1.0",
+    "@babel/preset-env": "^7.1.0",
+    "@syncfusion/ej2-base": "^17.4.51",
+    "@syncfusion/ej2-react-buttons": "^17.4.51",
+    "@syncfusion/ej2-react-calendars": "^17.4.51",
+    "@syncfusion/ej2-react-dropdowns": "^17.4.51",
+    "@syncfusion/ej2-react-schedule": "^17.4.51",
+    "axios": "^0.19.2",
+    "dotenv": "^7.0.0",
+    "isomorphic-unfetch": "^3.0.0",
+    "mobx": "^5.11.0",
+    "mobx-react": "^6.1.1",
+    "moment": "^2.24.0",
+    "next": "^9.2.2",
+    "next-page-transitions": "^1.0.0-beta.2",
+    "react": "^16.13.0",
+    "react-dom": "^16.13.0",
+    "react-scripts": "3.4.0",
+    "typescript": "^3.8.3",
+    "url-loader": "^2.0.1",
+    "uuid": "^3.3.2",
+    "yup": "^0.27.0"
+  }
+}

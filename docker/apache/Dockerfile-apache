@@ -1,0 +1,10 @@
+FROM httpd
+RUN apt-get update
+RUN apt-get install software-properties-common -y
+RUN apt-get install gnupg -y
+RUN apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 8C47BE8E75BCA694
+RUN add-apt-repository ppa:certbot/certbot -y
+RUN apt-get install certbot python-certbot-apache -y
+RUN a2enmod proxy
+RUN a2enmod proxy_http
+RUN a2enmod rewrite

@@ -1,0 +1,13 @@
+<?php
+
+namespace App\Http\Resources;
+
+use Illuminate\Http\Resources\Json\JsonResource;
+
+class Resource extends JsonResource
+{
+    public static function originalAttribute($attribute)
+    {
+        return $attribute;
+    }
+}

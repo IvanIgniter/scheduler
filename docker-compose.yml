@@ -1,0 +1,117 @@
+version: '2'
+
+volumes:
+  database:
+
+services:
+  apache:
+    build:
+      context: .
+      dockerfile: './docker/apache/Dockerfile-apache'
+    container_name: ${PROJECT_NAME}_apache
+    volumes:
+      - ./docker/apache/${ENVIRONMENT}.conf:/usr/local/apache2/conf/httpd.conf
+      - ./docker/apache/htpasswd:/etc/apache2/.htpasswd
+      - ./docker/certbot/${ENVIRONMENT}:/etc/letsencrypt
+    ports:
+      - '8080:8080'
+      - '80:80'
+      - '443:443'
+    environment:
+      TZ: 'Asia/Tokyo'
+    links:
+      - mysql:mysql
+      - php:php
+    volumes_from:
+      - data
+
+  php:
+    build:
+      context: .
+      dockerfile: './docker/php/Dockerfile-php'
+    container_name: ${PROJECT_NAME}_php
+    volumes_from:
+      - data
+    working_dir: /var/www/backend
+    ports:
+      - '9000:9000'
+    environment:
+      TZ: 'Asia/Tokyo'
+    links:
+      - mysql:mysql
+
+  mysql:
+    build:
+      context: .
+      dockerfile: './docker/mysql/Dockerfile-mysql'
+    command:
+      [
+        '--character-set-server=utf8',
+        '--collation-server=utf8_unicode_ci',
+        '--default-authentication-plugin=mysql_native_password',
+      ]
+    container_name: ${PROJECT_NAME}_mysql
+    ports:
+      - '3306:3306'
+    environment:
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+      MYSQL_DATABASE: ${MYSQL_DATABASE}
+      MYSQL_USER: ${MYSQL_USER}
+      MYSQL_PASSWORD: ${MYSQL_PASSWORD}
+      TZ: 'Asia/Tokyo'
+    volumes:
+      - ./docker/mysql/scripts:/docker-entrypoint-initdb.d
+      - database:/var/lib/mysql
+  
+  cron:
+    build:
+      context: .
+      dockerfile: './docker/cron/Dockerfile-cron'
+    container_name: ${PROJECT_NAME}_cron
+    volumes_from:
+      - data
+    working_dir: /var/www/backend
+    environment:
+      TZ: 'Asia/Tokyo'
+    links:
+      - mysql:mysql
+
+  fixer:
+    build:
+      context: .
+      dockerfile: './docker/fixer/Dockerfile-fixer'
+    container_name: ${PROJECT_NAME}_fixer
+    volumes_from:
+      - data
+    working_dir: /var/www/backend
+
+  data:
+    image: tianon/true
+    container_name: ${PROJECT_NAME}_data
+    volumes:
+      - ./sites/backend:/var/www/backend
+      - ./sites/frontend:/var/www/frontend
+    environment:
+      TZ: 'Asia/Tokyo'
+    tty: true
+
+  # Note: hot-reloading is running too slow.
+  # If you have high spec pc/unit you can enable this service by uncomment it out
+  # make sure to run docker-compose up --build
+  # Access container by: > docker exec -it ${PROJECT_NAME}_node bash
+  # NODE
+  # node:
+  #   container_name: ${PROJECT_NAME}_node
+  #   build:
+  #     context: .
+  #     dockerfile: './docker/node/Dockerfile'
+  #   # working_dir: /var/www/frontend
+  #   volumes:
+  #     - ${FRONTEND_DIR}:/var/www/frontend
+  #     - /var/www/frontend/node_modules
+  #     - ./sites/frontend/package.json:/var/www/frontend/package.json
+  #   ports:
+  #     - '3000:3000'
+  #   environment:
+  #     - NODE_ENV=development
+  #     # - CHOKIDAR_USEPOLLING=true

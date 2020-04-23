@@ -1,0 +1,7 @@
+orig/*
+sites/backend/composer.lock
+sites/backend/.php_cs.cache
+sites/frontend/node_modules/*
+sites/frontend/.next/*
+.vscode
+.idea
