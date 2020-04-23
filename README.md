@@ -1,4 +1,4 @@
-# Steel Industry Production Management System
+# Scheduler Project
 
 ### Specifications / Infrastructure Information
 
@@ -8,11 +8,7 @@
 - Postfix
 - CS-Fixer
 - Data Volume
-
-### Getting Started
-
-These instructions will get you a copy of the project up and running on your local machine for development and testing purposes.
-
+ 
 #### Prerequisites
 
 Make sure you have installed the following on your local machine:
@@ -20,7 +16,7 @@ Make sure you have installed the following on your local machine:
 - Git
 - Virtual Box
 - Node.js & NPM (*v12.14.0)
-- Docker Toolbox
+- Docker
 
 After installing docker toolbox, run the Docker Quickstart Terminal.
 
@@ -29,8 +25,8 @@ After installing docker toolbox, run the Docker Quickstart Terminal.
 1. Clone the repo
 
 ```
-git clone https://sprobe-engineer@bitbucket.org/cylabo/koken.git
-cd koken
+git clone https://github.com/IvanIgniter/scheduler.git
+cd sites/backend
 ```
 
 2. Setup the .env file for Docker
@@ -39,7 +35,8 @@ cd koken
 cp .env.example .env
 ```
 
-3. Setup frontend
+3. Setup frontend 
+cd sites/frontend
 ```
 follow Setting up Frontend section
 ```
@@ -50,7 +47,7 @@ follow Setting up Frontend section
 docker-compose build
 ```
 
-5. Start the containers
+5. Start the containers in root folder
 
 ```
 docker-compose up -d
@@ -64,7 +61,7 @@ follow Setting up Backend section
 
 7. Start the frontend
 ```
-from the host server go to the koken/sites/frontend directory.
+from the host server go to the project/sites/frontend directory.
 run this command: npm start
 ```
 
@@ -96,12 +93,6 @@ php artisan key:generate
 php artisan migrate --seed
 php artisan passport:install
 php artisan storage:link
-chown 1000:www-data storage
-chown 1000:www-data storage/app
-chown 1000:www-data storage/logs
-chown 1000:www-data storage/framework
-chown www-data:www-data -R storage/framework/*
-chown www-data:www-data -R storage/logs/*
 ```
 
 Copy the newly generated client secret of Client 2 from the `passport:install`command.
@@ -138,7 +129,7 @@ VUE_APP_DEBUG=true
 VUE_APP_API_GRANT_TYPE=password
 VUE_APP_API_CLIENT_ID=2
 VUE_APP_API_CLIENT_SECRET=(Paste the client secret here that you've copied earlier)
-VUE_APP_API_BASE_URL=http://192.168.99.100:8080
+VUE_APP_API_BASE_URL=http://192.168.1.100:8080
 
 4. Build
 
